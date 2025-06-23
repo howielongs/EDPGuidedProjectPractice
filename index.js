@@ -1,39 +1,75 @@
-let characters = [];
-let matchingCharacters = [];
-const charactersList = document.querySelector("#charactersList")
+let content = [];
+let matchingContent = [];
+const contentList = document.querySelector("#contentList")
 
-document.addEventListener('DOMContentLoaded', getCharacters)
+const baseUrl = `http://localhost:9001/api`;
 
-async function getCharacters() {
-  let url = 'http://localhost:9001/api/characters';
+document.addEventListener('DOMContentLoaded', getContent)
 
+async function getContent() {
   try {
-    const fetchedCharacters = await fetch(url)
-      .then(res => res.json())
-    characters.push(...fetchedCharacters);
+    content.push (...(await fetchCharacters ()))
+    content.push (...(await fetchFilms ()))
+    content.push (...(await fetchStarships ()))
   }
   catch (ex) {
-    console.error("Error reading characters.", ex.message);
+    console.error("Error reading content.", ex.message);
   }
-  console.log("All the characters are ", characters)
-  renderCharacters(characters);
+  console.log("All the content is ", content)
+  renderContent(content);
 }
 
-const filterCharacters = () => {
+const filterContent = () => {
   const searchString = document.querySelector("#searchString").value;
   const re = new RegExp(searchString, "i");
-  matchingCharacters = characters.filter(character => re.test(character.name))
-  renderCharacters(matchingCharacters);
+  matchingContent = content.filter(item => re.test(item.name ?? "") || re.test(item.title ?? "") || re.test(item.starship_class ?? ""))
+  renderContent(matchingContent);
 }
 
-const renderCharacters = characters => {
-  const divs = characters.map(character => {
+const renderContent = content => {
+  const divs = content.map(item => {
     const el = document.createElement('div');
-    el.addEventListener('click', () => goToCharacterPage(character.id));
-    el.textContent = character.name;
+    el.addEventListener('click', () => goToPage(item));
+    el.textContent = item.name ?? item.title ?? `Ship ID: ${item.id} (${item.starship_class})` ?? "Error";
     return el;
   })
-  charactersList.replaceChildren(...divs)
+  contentList.replaceChildren(...divs)
 }
 
-const goToCharacterPage = id => window.location = `/character.html?id=${id}`
+async function fetchCharacters() {
+  const url = `${baseUrl}/characters`;
+  const characters = await fetch(url)
+    .then(res => res.json())
+
+  characters.forEach(element => {
+    element.contentType = "character"
+  })
+
+  return characters;
+}
+
+async function fetchFilms() {
+  const url = `${baseUrl}/films`;
+  const films = await fetch(url)
+    .then(res => res.json())
+
+  films.forEach(element => {
+    element.contentType = "film"
+  })
+  return films;
+}
+
+async function fetchStarships() {
+  const url = `${baseUrl}/starships`;
+  const starships = await fetch(url)
+    .then(res => res.json())
+
+  starships.forEach(element => {
+    element.contentType = "starship"
+  })
+  return starships;
+}
+
+function goToPage (item) {
+  window.location = `/${item.contentType}.html?id=${item.id}`
+}

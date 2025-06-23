@@ -16,6 +16,8 @@ p {
   --light1: white;
   --dark2: darkblue;
   --light2: lightblue;
+  --invalidlight: red;
+  --invaliddark: darkred;
   background-color: var(--light1);
   color: var(--dark1);
 }
@@ -52,6 +54,7 @@ label {
 }
 
 /* Characters */
+#contentList,
 #charactersList {
   display: flex;
   flex-wrap: wrap;
@@ -59,6 +62,7 @@ label {
   padding: 0;
 }
 
+#contentList div,
 #charactersList div {
   padding: 10px;
   margin: 10px;
@@ -81,6 +85,7 @@ h1#name {
   border: 20px;
 }
 
+#crawl_section p,
 #generalInfo p {
   padding: 20px;
   margin: 10px;
@@ -95,12 +100,17 @@ h1#name {
 
 section#planets,
 section#characters,
+section#producers,
+section#starships,
+section#crawl_section,
 section#films {
   margin: 50px;
 }
 
 section#planets ul,
 section#characters ul,
+section#producers ul,
+section#starships ul,
 section#films ul {
   list-style-type: none;
   padding: 0;
@@ -108,6 +118,7 @@ section#films ul {
 
 section#planets a,
 section#characters a,
+section#starships a,
 section#films a {
   display: inline-block;
   text-decoration: none;
@@ -120,4 +131,42 @@ section#films a {
   margin: 10px;
   border-radius: 5px;
   border: 1px solid var(--dark2);
+}
+
+section#producers p {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1.1em;
+
+  background-color: var(--invalidlight);
+  color: var(--light1);
+  font-weight: bold;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--invaliddark);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  font-size: 0.75em;
+ 
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
