@@ -1,36 +1,46 @@
-body,
-div,
-h1,
-h2,
-h3,
-h4,
-h5,
-p {
+/* Reset */
+body, div, h1, h2, h3, h4, h5, p, ul {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
-  font-family: Arial, Helvetica, sans-serif;
-  --dark1: black;
-  --light1: white;
-  --dark2: darkblue;
-  --light2: lightblue;
+  font-family: 'SF Distant Galaxy', sans-serif;
+  letter-spacing: 2px;
+  font-weight: lighter;
+  --dark1: #111;
+  --light1: #FFE81F;
+  --dark2: #003366;
+  --light2: #cce0ff;
   --invalidlight: red;
   --invaliddark: darkred;
-  background-color: var(--light1);
-  color: var(--dark1);
+  color: var(--light1);
+  background-color:black;
+  background-image:
+  radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+  radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+  radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+  radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+  background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
+  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
 }
 
-button {
-  background-color: var(--light2);
-  color: var(--dark2);
-  font-weight: bold;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid var(--dark2);
+h1 {
+  font-family: 'SF Distant Galaxy Outline', sans-serif;
+  font-weight: lighter;
 }
 
+body {
+  line-height: 1.6;
+  padding: 20px;
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 0 2%;
+  box-sizing: border-box;
+}
+
+/* Input styling */
 input {
   display: block;
   width: 95%;
@@ -40,7 +50,7 @@ input {
   border: none;
   border-bottom: 2px solid var(--dark2);
   outline: none;
-  margin: 5px;
+  margin: 10px 0;
 }
 
 label {
@@ -53,91 +63,183 @@ label {
   font-weight: normal;
 }
 
-/* Characters */
+/* Character list layout */
 #contentList,
 #charactersList {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 0;
+  margin-top: 20px;
 }
 
 #contentList div,
 #charactersList div {
-  padding: 10px;
+  padding: 10px 15px;
   margin: 10px;
   border: 1px solid var(--dark2);
-  border-radius: 5px;
-  color: var(--dark2);
+  border-radius: 8px;
   background-color: var(--light2);
+  color: var(--dark2);
   font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-/* Character page */
-h1#name {
-  margin: 50px;
+#charactersList div:hover {
+  background-color: var(--dark2);
+  color: var(--light1);
+  transform: scale(1.05);
 }
 
-#generalInfo {
+/* Shared page headers */
+h1#name, h1#planet-name, h1#title {
+  margin: 40px auto;
+  text-align: center;
+  font-size: 2em;
+  font-family: 'SF Distant Galaxy Outline', sans-serif;
+  font-weight: lighter;
+}
+
+/* General info layout */
+#generalInfo,
+#planet-details {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  border: 20px;
+  margin: 20px auto;
 }
 
-#crawl_section p,
-#generalInfo p {
+#generalInfo p,
+#planet-details p,
+#crawl_section p {
   padding: 20px;
   margin: 10px;
-  color: var(--dark2);
   background-color: var(--light2);
+  color: var(--dark2);
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
 }
 
-#generalInfo span {
+#generalInfo span,
+#planet-details span {
   font-weight: bold;
   font-size: 1.1em;
 }
 
-section#planets,
+/* Section spacing */
 section#characters,
-section#producers,
+section#planets,
+section#films,
 section#starships,
-section#crawl_section,
-section#films {
-  margin: 50px;
+section#producers,
+section#planet-characters,
+section#planet-films,
+section#crawl_section {
+  margin: 40px auto;
+  max-width: 600px;
 }
 
-section#planets ul,
+section#characters h2,
+section#planets h2,
+section#films h2,
+section#starships h2,
+section#producers h2,
+section#planet-characters h2,
+section#planet-films h2,
+section#crawl_section h2 {
+  margin-bottom: 10px;
+  border-bottom: 2px solid var(--dark2);
+  padding-bottom: 5px;
+}
+
 section#characters ul,
-section#producers ul,
+section#planets ul,
+section#films ul,
 section#starships ul,
-section#films ul {
+section#producers ul,
+section#planet-characters ul,
+section#planet-films ul {
   list-style-type: none;
   padding: 0;
+  margin-bottom: 10px;
 }
 
-section#planets a,
-section#characters a,
-section#starships a,
-section#films a {
-  display: inline-block;
+/* Link card styles */
+section#characters li a,
+section#planets li a,
+section#films li a,
+section#starships li a,
+section#planet-characters li a,
+section#planet-films li a {
+  display: block;
+  background-color: var(--light2);
+  color: var(--dark2);
   text-decoration: none;
-  font-size: 1.1em;
+  font-weight: bold;
+  padding: 10px 15px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid var(--dark2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
+section#characters li a:hover,
+section#planets li a:hover,
+section#films li a:hover,
+section#starships li a:hover,
+section#planet-characters li a:hover,
+section#planet-films li a:hover {
+  background-color: var(--dark2);
+  color: var(--light1);
+  transform: translateX(4px);
+}
+
+/* Back to Characters button */
+a.back-button {
+  display: inline-block;
+  margin: 20px auto;
+  padding: 10px 20px;
   background-color: var(--light2);
   color: var(--dark2);
   font-weight: bold;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
+  text-decoration: none;
   border: 1px solid var(--dark2);
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+a.back-button:hover {
+  background-color: var(--dark2);
+  color: var(--light1);
+  transform: translateX(-4px);
+}
+
+/* Buttons (if used) */
+button {
+  background-color: var(--light2);
+  color: var(--dark2);
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 1px solid var(--dark2);
+  font-family: inherit;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--dark2);
+  color: var(--light1);
+  transform: translateX(-4px);
+  cursor: pointer;
+}
+
+/* Special producer tags */
 section#producers p {
   display: inline-block;
   text-decoration: none;
   font-size: 1.1em;
-
   background-color: var(--invalidlight);
   color: var(--light1);
   font-weight: bold;
@@ -147,6 +249,7 @@ section#producers p {
   border: 1px solid var(--invaliddark);
 }
 
+/* Tooltip */
 .tooltip {
   position: relative;
   display: inline-block;
@@ -162,11 +265,21 @@ section#producers p {
   padding: 5px 0;
   border-radius: 6px;
   font-size: 0.75em;
- 
   position: absolute;
   z-index: 1;
 }
 
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+/* Original crawl style preserved */
+section#crawl_section span#opening_crawl {
+  display: block;
+  white-space: pre-line;
+  margin-top: 20px;
+  font-style: italic;
+  font-size: 1em;
+  line-height: 1.7;
+  color: var(--dark2);
 }

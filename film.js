@@ -6,6 +6,8 @@ let producersDiv;
 let charactersDiv;
 let starshipsDiv;
 let openingCrawlSpan;
+let planetsDiv;
+
 const baseUrl = `http://localhost:9001/api`;
 
 function convertToNameCase (text) {
@@ -23,7 +25,10 @@ addEventListener('DOMContentLoaded', () => {
   producersDiv = document.querySelector('#producers>ul');
   charactersDiv = document.querySelector('#characters>ul');
   starshipsDiv = document.querySelector('#starships>ul');
+  planetsDiv = document.querySelector('#planets>ul');
+
   openingCrawlSpan = document.querySelector('span#opening_crawl');
+  
   const sp = new URLSearchParams(window.location.search)
   const id = sp.get('id')
   getFilm(id)
@@ -35,6 +40,7 @@ async function getFilm(id) {
     film = await fetchFilm(id)
     film.characters = await fetchCharacters(film)
     film.starships = await fetchStarships(film)
+    film.planets = await fetchPlanets(film)
   }
   catch (ex) {
     console.error(`Error reading character ${id} data.`, ex.message);
@@ -61,6 +67,13 @@ async function fetchStarships(film) {
   return starships;
 }
 
+async function fetchPlanets(film) {
+  const url = `${baseUrl}/films/${film?.id}/planets`;
+  const planets = await fetch(url).then(res => res.json());
+  return planets;
+}
+
+
 const renderFilm = film => {
   document.title = `SWAPI - ${film?.title}`;  // Just to make the browser tab say their name
   titleH1.textContent = film?.title;
@@ -78,7 +91,9 @@ const renderFilm = film => {
         <span class="tooltiptext">No data to show!</span>
       </p>
     </li>
-    `)
+  `);
+
+
   producersDiv.innerHTML = producersList.join("");
 
   const charactersList = film?.characters?.map(character => `<li><a href="/character.html?id=${character.id}">${character.name}</li>`)
@@ -86,6 +101,11 @@ const renderFilm = film => {
 
   const starshipsList = film?.starships?.map(starship => `<li><a href="/starship.html?id=${starship.id}">${convertToNameCase (starship.name)}</li>`)
   starshipsDiv.innerHTML = starshipsList.join("");
+
+  const planetsList = film?.planets?.map(planet => 
+    `<li><a href="/planet.html?id=${planet.id}">${planet.name}</a></li>`);
+  planetsDiv.innerHTML = planetsList.join("");
+  
 
   openingCrawlSpan.textContent = film?.opening_crawl;
 }

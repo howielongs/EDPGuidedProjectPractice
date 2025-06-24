@@ -73,3 +73,8 @@ async function fetchStarships() {
 function goToPage (item) {
   window.location = `/${item.contentType}.html?id=${item.id}`
 }
+
+function randomContent () {
+  let item = content[Math.floor(Math.random() * content.length)]
+  goToPage (item)
+}

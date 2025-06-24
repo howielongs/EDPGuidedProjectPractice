@@ -58,7 +58,14 @@ const renderCharacter = character => {
   heightSpan.textContent = character?.height;
   massSpan.textContent = character?.mass;
   birthYearSpan.textContent = character?.birth_year;
-  homeworldSpan.innerHTML = `<a href="/planet.html?id=${character?.homeworld.id}">${character?.homeworld.name}</a>`;
+  const homeworldList = document.querySelector('#homeworldList');
+  homeworldList.innerHTML = `
+    <li>
+      <a href="/planet.html?id=${character?.homeworld.id}">
+        ${character?.homeworld.name}
+      </a>
+    </li>
+  `;
   const filmsLis = character?.films?.map(film => `<li><a href="/film.html?id=${film.id}">${film.title}</li>`)
   filmsUl.innerHTML = filmsLis.join("");
 }
